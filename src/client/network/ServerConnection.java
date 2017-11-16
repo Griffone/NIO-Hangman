@@ -15,6 +15,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -74,6 +75,8 @@ public class ServerConnection {
                         if (answer != null)
                             handler.onAnswerReceive(answer);
                     }
+                } catch (SocketException ex) {
+                    connected = false;
                 } catch (IOException | ClassNotFoundException ex) {
                     Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
                 }

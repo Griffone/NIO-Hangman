@@ -32,9 +32,6 @@ public class Controller {
      * @return null if the guess is illegal or the new game state
      */
     public ServerAnswer guess(String guess) {
-        if (game.isALegalGuess(guess))
-            return game.makeAGuess(guess);
-        else
-            return null;
+        return game.makeAGuess(guess);
     }
 }

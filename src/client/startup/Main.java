@@ -23,7 +23,9 @@ public class Main {
         Controller.outputHandler = new OutputHandler();
         
         // Create servicing thread, one could start several, but there are no real benefits to it
-        Controller.createServiceThread().start();
+        Thread t = Controller.createServiceThread();
+        t.setDaemon(true);
+        t.start();
         
         // Finally create listening thread for the client input
         new Thread(new InputThread()).start();

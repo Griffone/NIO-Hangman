@@ -108,9 +108,6 @@ public class Game {
             newRound();
         
         if (!isALegalGuess(guess))
-            System.out.println("Illegal guess!");
-        
-        if (!isALegalGuess(guess))
             return new ServerAnswer(getSnapshot(), "Illegal guess!");
         
         guess = guess.toUpperCase();
@@ -131,7 +128,11 @@ public class Game {
                         sb.append(this.guess.charAt(i));
                 }
                 this.guess = sb.toString();
-                return new ServerAnswer(getSnapshot(), null);
+                if (!isInValidState()) {
+                    newRound();
+                    return new ServerAnswer(getSnapshot(), "Good job!");
+                }
+                return new ServerAnswer(getSnapshot(), "Hit!");
             } else {
                 // Check for a repeat guess
                 if (wrong_guesses[g - 'A'])
@@ -150,5 +151,5 @@ public class Game {
             return new ServerAnswer(getSnapshot(), null);
         }
     }
-    
+
 }
