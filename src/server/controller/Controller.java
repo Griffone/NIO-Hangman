@@ -6,6 +6,7 @@
 package server.controller;
 
 import common.GameStateSnapshot;
+import common.ServerAnswer;
 import server.model.Game;
 
 /**
@@ -30,7 +31,7 @@ public class Controller {
      * @param guess
      * @return null if the guess is illegal or the new game state
      */
-    public GameStateSnapshot guess(String guess) {
+    public ServerAnswer guess(String guess) {
         if (game.isALegalGuess(guess))
             return game.makeAGuess(guess);
         else

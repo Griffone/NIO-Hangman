@@ -5,11 +5,13 @@
  */
 package common;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Griffone
  */
-public class GameStateSnapshot {
+public class GameStateSnapshot implements Serializable {
     
     public final int points;
     public final String word;

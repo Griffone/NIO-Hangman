@@ -28,8 +28,15 @@ public class InputThread implements Runnable {
             Controller.connect(words);
         else if (words[0].compareToIgnoreCase("disconnect") == 0 || words[0].compareToIgnoreCase("quit") == 0 || words[0].compareToIgnoreCase("exit") == 0)
             Controller.disconnect();
+        else if (words[0].compareToIgnoreCase("guess") == 0) {
+            if (words.length < 2)
+                System.out.println("Please enter your guess");
+            else
+                Controller.guess(words[1]);
+        } else if (words[0].compareToIgnoreCase("start") == 0)
+            Controller.startNewGame();
         else
-            Controller.guess(words[0]);
+            System.out.println("Unknown command!");
     }
     
     @Override

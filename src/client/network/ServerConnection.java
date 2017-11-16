@@ -9,6 +9,7 @@ import common.Definitions;
 import common.GameStateSnapshot;
 import common.Message;
 import common.MessageType;
+import common.ServerAnswer;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -43,6 +44,8 @@ public class ServerConnection {
         con.socket = new Socket();
         con.socket.connect(address, MS_CONNECT_TIMEOUT);
         con.socket.setSoTimeout(Definitions.MS_TIMEOUT);
+        con.in = new ObjectInputStream(con.socket.getInputStream());
+        con.out = new ObjectOutputStream(con.socket.getOutputStream());
         con.connected = true;
         return con;
     }
@@ -54,7 +57,9 @@ public class ServerConnection {
     }
     
     public void disconnect() throws IOException {
+        connected = false;
         sendMessage(new Message(MessageType.MT_DISCONNECT, null));
+        socket.close();
     }
     
     public class ConnectionThread implements Runnable {
@@ -65,9 +70,9 @@ public class ServerConnection {
                 try {
                     Message msg = (Message) in.readObject();
                     if (msg.type == MessageType.MT_ANSWER) {
-                        GameStateSnapshot snap = GameStateSnapshot.fromString(msg.string);
-                        if (snap != null)
-                            handler.onSnapshotReceive(snap);
+                        ServerAnswer answer = (ServerAnswer) msg.payload;
+                        if (answer != null)
+                            handler.onAnswerReceive(answer);
                     }
                 } catch (IOException | ClassNotFoundException ex) {
                     Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);

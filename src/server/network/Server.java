@@ -29,11 +29,16 @@ public class Server {
         while (true) {
             try {
                 Socket clientSock = socket.accept();
+                System.out.println("New connection");
                 Thread t = new Thread(new ClientHandlerThread(clientSock));
                 t.start();
             } catch (IOException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+    
+    public static String getServerAddress() {
+        return socket.getInetAddress().getHostAddress();
     }
 }

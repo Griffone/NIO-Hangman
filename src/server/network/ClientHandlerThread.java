@@ -9,6 +9,7 @@ import common.Definitions;
 import common.GameStateSnapshot;
 import common.Message;
 import common.MessageType;
+import common.ServerAnswer;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -35,13 +36,16 @@ public class ClientHandlerThread implements Runnable {
     
     public ClientHandlerThread(Socket socket) throws SocketException, IOException {
         this.socket = socket;
+        System.out.print("Creating thred on ");
+        System.out.println(this.socket);
         socket.setSoLinger(true, MS_LINGER);
         socket.setSoTimeout(Definitions.MS_TIMEOUT);
         controller = new Controller();
-        in = new ObjectInputStream(socket.getInputStream());
+        System.out.println("Something immature and explicit");
         out = new ObjectOutputStream(socket.getOutputStream());
+        in = new ObjectInputStream(socket.getInputStream());
+        System.out.println("Something immature and explicit");
         connected = true;
-        sendGameState(controller.getCurrentState());
     }
     
     @Override
@@ -49,18 +53,22 @@ public class ClientHandlerThread implements Runnable {
         while (connected) {
             try {
                 Message message = (Message) in.readObject();
+                System.out.println(message);
                 switch (message.type) {
                     case MT_CONNECT:
                         System.out.println("New client connected");
+                        sendAnswer(new ServerAnswer(controller.getCurrentState(), "New game!"));
+                        break;
+                        
+                    case MT_NEW_GAME:
+                        System.out.println("Starting new game");
+                        controller = new Controller();
+                        sendAnswer(new ServerAnswer(controller.getCurrentState(), "New game!"));
                         break;
                         
                     case MT_GUESS:
-                        System.out.println("Guessing " + message.string);
-                        GameStateSnapshot snapshot = controller.guess(message.string);
-                        if (snapshot == null)
-                            sendGameState(controller.getCurrentState());
-                        else
-                            sendGameState(snapshot);
+                        String guess = (String) message.payload;
+                        sendAnswer(controller.guess(guess));
                         break;
                         
                     case MT_DISCONNECT:
@@ -73,8 +81,8 @@ public class ClientHandlerThread implements Runnable {
         }
     }
     
-    void sendGameState(GameStateSnapshot state) throws IOException {
-        out.writeObject(new Message(MessageType.MT_ANSWER, state.toString()));
+    void sendAnswer(ServerAnswer answer) throws IOException {
+        out.writeObject(new Message(MessageType.MT_ANSWER, answer));
         out.flush();
         out.reset();
     }

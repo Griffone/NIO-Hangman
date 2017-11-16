@@ -5,7 +5,7 @@
  */
 package client.controller;
 
-import common.GameStateSnapshot;
+import common.ServerAnswer;
 
 /**
  *
@@ -14,7 +14,7 @@ import common.GameStateSnapshot;
 public interface ControllerOutputHandler {
     
     public void handleError(Exception error);
-    public void drawGameState(GameStateSnapshot snapshot);
+    public void drawServerAnswer(ServerAnswer answer);
     public void print(String line);
     
 }

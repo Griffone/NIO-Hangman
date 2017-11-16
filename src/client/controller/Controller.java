@@ -53,4 +53,8 @@ public class Controller {
         params[0] = string;
         QUEUE.offer(new Action(new AGuess(), params));
     }
+    
+    public static void startNewGame() {
+        QUEUE.offer(new Action(new ANewGame(), null));
+    }
 }

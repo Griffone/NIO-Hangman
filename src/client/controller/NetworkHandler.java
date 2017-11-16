@@ -6,7 +6,7 @@
 package client.controller;
 
 import client.network.NetworkOutputHandler;
-import common.GameStateSnapshot;
+import common.ServerAnswer;
 
 /**
  *
@@ -15,8 +15,8 @@ import common.GameStateSnapshot;
 public class NetworkHandler implements NetworkOutputHandler {
 
     @Override
-    public void onSnapshotReceive(GameStateSnapshot snapshot) {
-        Controller.outputHandler.drawGameState(snapshot);
+    public void onAnswerReceive(ServerAnswer answer) {
+        Controller.outputHandler.drawServerAnswer(answer);
     }
     
 }

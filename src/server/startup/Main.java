@@ -6,6 +6,7 @@
 package server.startup;
 
 import java.io.IOException;
+import server.model.Game;
 import server.network.Server;
 
 /**
@@ -15,7 +16,11 @@ import server.network.Server;
 public class Main {
     
     public static void main(String[] args) throws IOException {
+        // Read words.txt
+        Game.initializeDictionary("C:\\Studies\\Network Programming\\HW1\\src\\server\\model\\words.txt");
         Server.inititalize();
+        System.out.print("Initialized server on ");
+        System.out.println(Server.getServerAddress());
         Server.run();
     }
     

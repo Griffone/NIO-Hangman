@@ -7,6 +7,7 @@ package client.view;
 
 import client.controller.ControllerOutputHandler;
 import common.GameStateSnapshot;
+import common.ServerAnswer;
 
 /**
  *
@@ -19,20 +20,28 @@ public class OutputHandler implements ControllerOutputHandler {
         System.err.print("Error! ");
         System.err.println(error);
     }
-
-    @Override
+    
     public void drawGameState(GameStateSnapshot snapshot) {
-        System.out.println();
         System.out.print("Score: ");
         System.out.println(snapshot.points);
         System.out.print("Remaining lives: ");
         System.out.println(snapshot.remainingLives);
         System.out.println(snapshot.word);
+        System.out.println();
     }
 
     @Override
     public void print(String line) {
         System.out.println(line);
+    }
+
+    @Override
+    public void drawServerAnswer(ServerAnswer answer) {
+        System.out.println();
+        if (answer.optional != null)
+            print(answer.optional);
+        if (answer.snapshot != null)
+            drawGameState(answer.snapshot);
     }
 
 }

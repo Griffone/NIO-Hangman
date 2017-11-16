@@ -5,7 +5,7 @@
  */
 package client.network;
 
-import common.GameStateSnapshot;
+import common.ServerAnswer;
 
 /**
  *
@@ -13,5 +13,5 @@ import common.GameStateSnapshot;
  */
 public interface NetworkOutputHandler {
     
-    public void onSnapshotReceive(GameStateSnapshot snapshot);
+    public void onAnswerReceive(ServerAnswer answer);
 }
