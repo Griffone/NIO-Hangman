@@ -17,17 +17,12 @@ import java.util.function.Consumer;
  *
  * @author Griffone
  */
-public class AGuessWord implements Consumer<String[]> {
+public class AGuess implements Consumer<String[]> {
 
     @Override
     public void accept(String[] params) {
         if (ServerConnection.connection == null) {
             Controller.outputHandler.print("Please connect first!");
-            return;
-        }
-        
-        if (params[0].length() != 1) {
-            Controller.outputHandler.handleError(new IllegalArgumentException("Illegal amount of letters!"));
             return;
         }
         
@@ -42,7 +37,7 @@ public class AGuessWord implements Consumer<String[]> {
         
         try {
             Controller.outputHandler.print("Guessing '" + params[0] + '\'');
-            ServerConnection.connection.sendMessage(new Message(MessageType.MT_GUESS_LETTER, params[0]));
+            ServerConnection.connection.sendMessage(new Message(MessageType.MT_GUESS, params[0]));
         } catch (IOException ex) {
             Controller.outputHandler.handleError(ex);
         }

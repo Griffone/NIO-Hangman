@@ -34,6 +34,10 @@ public class GameStateSnapshot {
         }
         return null;
     }
+
+    public GameStateSnapshot() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     /**
      * Transforms the GameState into a json-like string

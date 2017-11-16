@@ -48,17 +48,9 @@ public class Controller {
         shouldEnd = true;
     }
     
-    public static void guessWord(String word) {
+    public static void guess(String string) {
         String[] params = new String[1];
-        params[0] = word;
-        QUEUE.offer(new Action(new AGuessWord(), params));
-    }
-    
-    public static void guessLetter(char letter) {
-        String[] params = new String[1];
-        char[] chars = new char[1];
-        chars[0] = letter;
-        params[0] = new String(chars);
-        QUEUE.offer(new Action(new AGuessLetter(), params));
+        params[0] = string;
+        QUEUE.offer(new Action(new AGuess(), params));
     }
 }

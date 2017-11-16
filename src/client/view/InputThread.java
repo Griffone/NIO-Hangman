@@ -28,10 +28,8 @@ public class InputThread implements Runnable {
             Controller.connect(words);
         else if (words[0].compareToIgnoreCase("disconnect") == 0 || words[0].compareToIgnoreCase("quit") == 0 || words[0].compareToIgnoreCase("exit") == 0)
             Controller.disconnect();
-        else if (words[0].length() == 1)
-            Controller.guessLetter(words[0].charAt(0));
         else
-            Controller.guessWord(words[0]);
+            Controller.guess(words[0]);
     }
     
     @Override
