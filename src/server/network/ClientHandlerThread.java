@@ -36,15 +36,11 @@ public class ClientHandlerThread implements Runnable {
     
     public ClientHandlerThread(Socket socket) throws SocketException, IOException {
         this.socket = socket;
-        System.out.print("Creating thred on ");
-        System.out.println(this.socket);
         socket.setSoLinger(true, MS_LINGER);
         socket.setSoTimeout(Definitions.MS_TIMEOUT);
         controller = new Controller();
-        System.out.println("Something immature and explicit");
         out = new ObjectOutputStream(socket.getOutputStream());
         in = new ObjectInputStream(socket.getInputStream());
-        System.out.println("Something immature and explicit");
         connected = true;
     }
     
