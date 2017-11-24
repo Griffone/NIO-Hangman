@@ -17,7 +17,7 @@ public class Main {
     
     public static void main(String[] args) throws IOException {
         // Read words.txt
-        Game.initializeDictionary("C:\\Studies\\Network Programming\\HW1\\src\\server\\model\\words.txt");
+        Game.initializeDictionary("D:\\Projects\\Java\\HW1\\src\\server\\model\\words.txt");
         Server.inititalize();
         System.out.print("Initialized server on ");
         System.out.println(Server.getServerAddress());
